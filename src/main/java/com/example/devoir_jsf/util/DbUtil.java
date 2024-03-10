@@ -23,12 +23,18 @@ public class DbUtil {
         }
         try {
             String databaseUrl = System.getenv("DATABASE_URL");
+            if (databaseUrl == null) {
+                throw new SQLException("DATABASE_URL not set in the environment variables");
+            }
             URI dbUri = new URI(databaseUrl);
+
             String username = dbUri.getUserInfo().split(":")[0];
             String password = dbUri.getUserInfo().split(":")[1];
-            String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+            String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' +
+                    dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
 
-            return DriverManager.getConnection(dbUrl, username, password);
+            connection = DriverManager.getConnection(dbUrl, username, password);
+            return connection;
         } catch (URISyntaxException | SQLException e) {
             throw new RuntimeException("Error connecting to the database", e);
         }
@@ -46,3 +52,4 @@ public class DbUtil {
         }
     }
 }
+
