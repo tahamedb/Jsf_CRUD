@@ -13,5 +13,12 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="d31fehukfeqjil@cc3engiv0mo271.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com" uuid="a17713bb-d673-45c1-849e-5d73b0a4d3c9">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://cc3engiv0mo271.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d31fehukfeqjil</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
