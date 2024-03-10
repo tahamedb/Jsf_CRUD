@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/template.xhtml">
+    <ui:define name="header">
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand">#{msg['employeeList']}</a>
+                <h:form class="d-flex">
+                    <h:inputText value="#{employeeBean.searchQuery}" class="form-control me-2" placeholder="#{msg['searchPlaceholder']}" aria-label="#{msg['searchPlaceholder']}">
+                    <f:passThroughAttribute name="placeholder" value="#{msg['searchPlaceholder']}"/>
+                    </h:inputText>
+                    <h:commandButton value="#{msg['searchButton']}" action="#{employeeBean.searchEmployees}" styleClass="btn btn-outline-success"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink action="#{languageBean.changeLanguage('en')}" title="English">
+                        <h:graphicImage library="flags" name="us.png" style="height:40px;"/>
+                    </h:commandLink>
+                    <h:commandLink action="#{languageBean.changeLanguage('fr')}" title="French">
+                        <h:graphicImage library="flags" name="fr.png" style="height:40px;"/>
+                    </h:commandLink>
+                </h:form>
+
+            </div>
+        </nav>
+    </ui:define>
+
+    <ui:define name="content">
+        <br/><br/>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <h:form>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <h:inputText id="name" value="#{employeeBean.employee.name}" required="true" styleClass="form-control">
+                                    <f:passThroughAttribute name="placeholder" value="#{msg['namePlaceholder']}"/>
+                                </h:inputText>
+                                <h:message for="name" style="color: red"/>
+                            </div>
+                            <div class="col">
+                                <h:inputText id="email" value="#{employeeBean.employee.email}" required="true" styleClass="form-control" validator="#{employeeBean.validateEmail}">
+                                    <f:passThroughAttribute name="placeholder" value="#{msg['emailPlaceholder']}"/>
+                                </h:inputText>
+                                <h:message for="email" style="color: red"/>
+                            </div>
+                            <div class="col">
+                                <h:inputText id="dob" value="#{employeeBean.employee.dob}" required="true" styleClass="form-control">
+                                    <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                    <f:passThroughAttribute name="placeholder" value="#{msg['dobPlaceholder']}"/>
+                                </h:inputText>
+                                <h:message for="dob" style="color: red"/>
+                            </div>
+                            <div class="col">
+                                <h:inputText id="department" value="#{employeeBean.employee.department}" required="true" styleClass="form-control">
+                                    <f:passThroughAttribute name="placeholder" value="#{msg['departmentPlaceholder']}"/>
+                                </h:inputText>
+                                <h:message for="department" style="color: red"/>
+                            </div>
+                            <div class="col">
+                                <h:commandButton value="#{msg['addButton']}" action="#{employeeBean.saveEmployee}" styleClass="btn btn-primary mt-2"/>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+
+
+                <h:form id="employeeForm">
+                    <h:dataTable value="#{employeeBean.employees}" var="employee"
+                                 styleClass="table table-striped table-bordered table-hover" headerClass="text-center" rowClasses="odd-row, even-row">
+                        <h:column>
+                            <f:facet name="header">#{msg['nameHeader']}</f:facet>
+                            <h:outputText value="#{employee.name}" rendered="#{!employee.editable}"/>
+                            <h:inputText value="#{employee.name}" rendered="#{employee.editable}" styleClass="form-control"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{msg['emailHeader']}</f:facet>
+                            <h:outputText value="#{employee.email}" rendered="#{!employee.editable}"/>
+                            <h:inputText value="#{employee.email}" rendered="#{employee.editable}" styleClass="form-control"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{msg['dobHeader']}</f:facet>
+                            <h:outputText value="#{employee.dob}" rendered="#{!employee.editable}"/>
+                            <h:inputText value="#{employee.dob}" rendered="#{employee.editable}" styleClass="form-control">
+                                <f:convertDateTime pattern="yyyy-MM-dd"/>
+                            </h:inputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{msg['departmentHeader']}</f:facet>
+                            <h:outputText value="#{employee.department}" rendered="#{!employee.editable}"/>
+                            <h:inputText value="#{employee.department}" rendered="#{employee.editable}" styleClass="form-control"/>
+                        </h:column>
+                        <h:column>
+                            <h:commandButton value="#{msg['editButton']}" action="#{employeeBean.editEmployee(employee)}" rendered="#{!employee.editable}" styleClass="btn btn-outline-warning"/>
+                            <h:commandButton value="#{msg['deleteButton']}" action="#{employeeBean.deleteEmployee(employee)}" rendered="#{!employee.editable}" styleClass="btn btn-outline-danger"/>
+                            <h:commandButton value="#{msg['saveButton']}" action="#{employeeBean.saveChanges(employee)}" rendered="#{employee.editable}" styleClass="btn btn-outline-success"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </div>
+        </div>
+        <br/><br/><br/><br/><br/><br/><br/><br/>
+    </ui:define>
+    <ui:define name="footer">
+        <footer class="footer text-black text-center py-3 down">
+            <hr style="border-top: 2px solid black;"/>
+            <p>#{msg['companyRights']}</p>
+        </footer>
+    </ui:define>
+</ui:composition>
+</html>
