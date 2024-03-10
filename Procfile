@@ -1,1 +1,1 @@
-web: java -jar target/Devoir_Jsf.jar
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.example.devoir_jsf
