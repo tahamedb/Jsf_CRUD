@@ -94,7 +94,9 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
+                            <includeGroupIds>com.heroku</includeGroupIds>
                             <outputDirectory>${project.build.directory}/dependency</outputDirectory>
+                            <!-- This directory must match the path used in the Procfile -->
                         </configuration>
                     </execution>
                 </executions>
