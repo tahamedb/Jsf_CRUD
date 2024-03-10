@@ -19,7 +19,7 @@ public class EmployeeDAO {
     private static final String SELECT_ALL_EMPLOYEES = "SELECT * FROM employees";
     private static final String ADD_EMPLOYE = "insert into employees (name,email,date_of_birth,department) values(?,?,?,?)";
     private static final String DELETE_EMPLOYEE_SQL = "DELETE FROM employees WHERE id = ?";
-     private static final String UPDATE_EMPLOYEE_SQL = "UPDATE employees SET name = ?, email = ?, date_of_birth = ?, department = ? WHERE id = ?";
+    private static final String UPDATE_EMPLOYEE_SQL = "UPDATE employees SET name = ?, email = ?, date_of_birth = ?, department = ? WHERE id = ?";
 
 
     public List<Employee> getAllEmployees() throws SQLException {
@@ -80,7 +80,7 @@ public class EmployeeDAO {
     public boolean updateEmployee(Employee employee) throws SQLException {
         System.out.println("dkhlt l update dyal dao");
         try (
-             PreparedStatement statement = connection.prepareStatement(UPDATE_EMPLOYEE_SQL)) {
+                PreparedStatement statement = connection.prepareStatement(UPDATE_EMPLOYEE_SQL)) {
             statement.setString(1, employee.getName());
             statement.setString(2, employee.getEmail());
             statement.setDate(3, new java.sql.Date(employee.getDob().getTime()));

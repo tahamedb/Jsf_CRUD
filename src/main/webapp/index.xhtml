@@ -10,7 +10,7 @@
                 <a class="navbar-brand">#{msg['employeeList']}</a>
                 <h:form class="d-flex">
                     <h:inputText value="#{employeeBean.searchQuery}" class="form-control me-2" placeholder="#{msg['searchPlaceholder']}" aria-label="#{msg['searchPlaceholder']}">
-                    <f:passThroughAttribute name="placeholder" value="#{msg['searchPlaceholder']}"/>
+                        <f:passThroughAttribute name="placeholder" value="#{msg['searchPlaceholder']}"/>
                     </h:inputText>
                     <h:commandButton value="#{msg['searchButton']}" action="#{employeeBean.searchEmployees}" styleClass="btn btn-outline-success"/>
                 </h:form>
@@ -31,40 +31,7 @@
         <br/><br/>
         <div class="row justify-content-center">
             <div class="col-md-10">
-                <h:form>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col">
-                                <h:inputText id="name" value="#{employeeBean.employee.name}" required="true" styleClass="form-control">
-                                    <f:passThroughAttribute name="placeholder" value="#{msg['namePlaceholder']}"/>
-                                </h:inputText>
-                                <h:message for="name" style="color: red"/>
-                            </div>
-                            <div class="col">
-                                <h:inputText id="email" value="#{employeeBean.employee.email}" required="true" styleClass="form-control" validator="#{employeeBean.validateEmail}">
-                                    <f:passThroughAttribute name="placeholder" value="#{msg['emailPlaceholder']}"/>
-                                </h:inputText>
-                                <h:message for="email" style="color: red"/>
-                            </div>
-                            <div class="col">
-                                <h:inputText id="dob" value="#{employeeBean.employee.dob}" required="true" styleClass="form-control">
-                                    <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                    <f:passThroughAttribute name="placeholder" value="#{msg['dobPlaceholder']}"/>
-                                </h:inputText>
-                                <h:message for="dob" style="color: red"/>
-                            </div>
-                            <div class="col">
-                                <h:inputText id="department" value="#{employeeBean.employee.department}" required="true" styleClass="form-control">
-                                    <f:passThroughAttribute name="placeholder" value="#{msg['departmentPlaceholder']}"/>
-                                </h:inputText>
-                                <h:message for="department" style="color: red"/>
-                            </div>
-                            <div class="col">
-                                <h:commandButton value="#{msg['addButton']}" action="#{employeeBean.saveEmployee}" styleClass="btn btn-primary mt-2"/>
-                            </div>
-                        </div>
-                    </div>
-                </h:form>
+
 
 
                 <h:form id="employeeForm">
@@ -98,6 +65,50 @@
                             <h:commandButton value="#{msg['saveButton']}" action="#{employeeBean.saveChanges(employee)}" rendered="#{employee.editable}" styleClass="btn btn-outline-success"/>
                         </h:column>
                     </h:dataTable>
+
+                </h:form>
+                <h:form id="paginationForm" styleClass="d-flex justify-content-center align-items-center">
+                    <h:outputText value="Page #{employeeBean.currentPage+1}" />
+                    <h:commandLink value="#{msg['Previous']}" action="#{employeeBean.navigateToPreviousPage}" styleClass="btn btn-outline-secondary text-center mx-2" />
+                    <h:commandLink value="#{msg['Next']}" action="#{employeeBean.navigateToNextPage}" styleClass="btn btn-outline-secondary text-center mx-2" />
+                </h:form>
+                <h:form>
+                    <div class="container">
+                        <h:commandButton rendered="#{!employeeBean.fieldsVisible}" value="#{msg['addButton']}" action="#{employeeBean.toggleFields()}" styleClass="btn btn-primary mt-2"  immediate="true"/>
+<br></br><br></br>
+                        <h:panelGroup rendered="#{employeeBean.fieldsVisible}">
+                            <div class="row">
+                                <div class="col">
+                                    <h:inputText id="name" value="#{employeeBean.employee.name}" required="true" styleClass="form-control">
+                                        <f:passThroughAttribute name="placeholder" value="#{msg['namePlaceholder']}"/>
+                                    </h:inputText>
+                                    <h:message for="name" style="color: red"/>
+                                </div>
+                                <div class="col">
+                                    <h:inputText id="email" value="#{employeeBean.employee.email}" required="true" styleClass="form-control" validator="#{employeeBean.validateEmail}">
+                                        <f:passThroughAttribute name="placeholder" value="#{msg['emailPlaceholder']}"/>
+                                    </h:inputText>
+                                    <h:message for="email" style="color: red"/>
+                                </div>
+                                <div class="col">
+                                    <h:inputText id="dob" value="#{employeeBean.employee.dob}" required="true" styleClass="form-control">
+                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                        <f:passThroughAttribute name="placeholder" value="#{msg['dobPlaceholder']}"/>
+                                    </h:inputText>
+                                    <h:message for="dob" style="color: red"/>
+                                </div>
+                                <div class="col">
+                                    <h:inputText id="department" value="#{employeeBean.employee.department}" required="true" styleClass="form-control">
+                                        <f:passThroughAttribute name="placeholder" value="#{msg['departmentPlaceholder']}"/>
+                                    </h:inputText>
+                                    <h:message for="department" style="color: red"/>
+                                </div>
+                                <div class="col">
+                                    <h:commandButton value="Save" action="#{employeeBean.saveEmployee()}" styleClass="btn btn-primary mt-2"/>
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                    </div>
                 </h:form>
             </div>
         </div>

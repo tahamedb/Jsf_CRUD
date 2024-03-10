@@ -15,6 +15,7 @@ import jakarta.faces.view.ViewScoped;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +28,26 @@ public class EmployeeBean implements Serializable {
     private String email;
     private Date dob;
     private String searchQuery;
+    private boolean fieldsVisible = false;
+    private static final int DEFAULT_PAGE_SIZE = 5; // Nombre de lignes par page par défaut
+    private int pageSize = DEFAULT_PAGE_SIZE;
+    private int currentPage = 0 ;
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public boolean isFieldsVisible() {
+        return fieldsVisible;
+    }
+
+    public void toggleFields() {
+        fieldsVisible = !fieldsVisible;
+    }
     public String getSearchQuery() {
         return searchQuery;
     }
@@ -79,8 +100,35 @@ public class EmployeeBean implements Serializable {
     private String department;
     private Employee employee ;
 
+    public List<Employee> getEmployees() throws SQLException {
+        int index = currentPage * 5; // Calculer l'indice de début pour la page actuelle
+        int endIndex = Math.min(index + 5, employees.size()); // Calculer l'indice de fin pour la page actuelle, en s'assurant de ne pas dépasser la taille de la liste d'employés
+        if (index >= employees.size()) {
+            // Si l'indice de début dépasse la taille de la liste, retourner une liste vide
+            return Collections.emptyList();
+        } else {
+            // Retourner la sous-liste d'employés correspondant à la page actuelle
+            return employees.subList(index, endIndex);
+        }
+    }
+
+
     public Employee getEmployee() {
         return employee;
+    }
+
+
+
+    public void navigateToPreviousPage() {
+        if(currentPage > 0){
+            currentPage--;
+        }
+    }
+
+    public void navigateToNextPage() {
+
+        currentPage++;
+
     }
 
     public void setEmployee(Employee employee) {
@@ -111,9 +159,7 @@ public class EmployeeBean implements Serializable {
         }
     }
 
-    public List<Employee> getEmployees() {
-        return employees;
-    }
+
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
