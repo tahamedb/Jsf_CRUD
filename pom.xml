@@ -78,19 +78,23 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.1.2</version> <!-- Ensure you're using a recent version -->
                 <executions>
                     <execution>
-                        <id>copy-webapp-runner</id>
+                        <id>copy-dependencies</id>
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <includeGroupIds>com.heroku</includeGroupIds>
                             <outputDirectory>${project.build.directory}/dependency</outputDirectory>
-                            <includeArtifactIds>webapp-runner</includeArtifactIds>
                         </configuration>
                     </execution>
                 </executions>
